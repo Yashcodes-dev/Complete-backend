@@ -7,11 +7,11 @@
     "backend",
     "chai"
   ],
+  "type": "module",
   "license": "ISC",
   "author": "Yash",
-  "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "--watch-src/index.js"
   }
 }
