@@ -5,7 +5,10 @@ const storage = multer.diskStorage({
         cb(null, "./public/temp")
     },
     filename: function(req, file, cb){
-        cb(null,file.originalname) 
+      crypto.randomBytes(16, function (err, raw) {
+          if (err) return cb(err)
+          cb(null, file.fieldname + '-' + raw.toString('hex'))
+    })// this is generating a random string to put in the file name so that two files don't overide eachother or to prevent files from having same name 
     }
 })
 
