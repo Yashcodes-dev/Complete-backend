@@ -8,10 +8,23 @@ app.use(cors({
     origin: process.env.CORS_ORIGIN,
     credentials: true,
 }))
+
+
 app.use(express.json({limit: "20kb"}))
 app.use(express.urlencoded({extended: true, limit:"16kb"}))
 app.use(express.static("public"))
 app.use(cookieParser())
+
+
+//routes import
+
+import userRouter from "./routes/user.routes.js"
+//userRouter is just a name , go check the actual thing which we are exporting from user.router.js
+
+
+
+//routes declaration
+app.use('/api/v1/users', userRouter)
 
 
 
