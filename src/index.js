@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { DB_NAME } from "./constants.js";
 import connectDB from "./db/index.js";
 import { app } from "./app.js";
+import cloudinary from 'cloudinary'
 
 
 
@@ -10,6 +11,11 @@ import { app } from "./app.js";
 dotenv.config({
   path: '.env'
 })
+
+// console.log("Cloudinary cloud:", cloudinary.config().cloud_name);
+// console.log("Cloudinary API key exists:", !!cloudinary.config().api_key);
+// console.log("Cloudinary API secret exists:", !!cloudinary.config().api_secret);
+
 
 
 // database connection 

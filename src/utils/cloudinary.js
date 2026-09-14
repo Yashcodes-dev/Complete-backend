@@ -1,3 +1,4 @@
+import "dotenv/config" // importing this before cloudinary cause  cloudinary need these variables 
 import {v2 as cloudinary} from "cloudinary"
 import fs from "fs"
 
@@ -18,19 +19,19 @@ const uploadonCloudinary = async(localFilePath)=>{
    //upload the file on cloudinary 
    //.uploader is the Cloudinary's upload functionality 
    // .uploads() --> perform the actual upload --> tells the cloudinary to upload the file in this path
+
   const response = await cloudinary.uploader.upload(localFilePath, {
         resource_type: "auto" //Automatically determine what kind of resource this file is
       //   useful because your backend might upload different kinds of media.
     })
 
-    console.log("file is uploaded on cloudinary", response.url)
-    //file has been uploaded succesfully 
-    return response;
+    fs.unlinkSync(localFilePath)
+     return response;
    // The response contains things such as the uploaded resource's URL and other metadata.
 
  } catch (error) {
-   // this simply means unlink the file from server we didn't want the file to be present on the server forever 
-    fs.unlinkSync(localFilePath)// removes the locally saved temporary file as the upload operation got failed
+    console.log("CLOUDINARY ERROR:", error);
+    fs.unlinkSync(localFilePath);
     return null;
  }
 }

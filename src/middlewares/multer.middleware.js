@@ -2,20 +2,15 @@ import multer from 'multer'
 
 const storage = multer.diskStorage({  //diskStorage() -> "I want uploaded files to be stored on the server's disk."
     // destination --> tells us where the files should be stored
-    destination: function(req, file, cb){ // req, file , cb --> arguments given by Multer  
+    destination: function(req, file, cb){   
         cb(null, "./public/temp")
     },
 
     // filename --> what should file be called  
-    filename: function(req, file, cb){
-      crypto.randomBytes(16, function (err, raw) {
-          if (err) return cb(err)
-          cb(null, file.fieldname + '-' + raw.toString('hex'))
-    })// this is generating a random string to put in the file name so that two files don't overide eachother or to prevent files from having same name 
+     filename: function (req, file, cb) {
+      cb(null, file.originalname)
     }
-})
-// we haven't created any uplading middleware we've just told multer to use these rules when u upload files 
-
+  })    
 
 
 export const upload = multer({

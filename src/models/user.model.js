@@ -55,7 +55,7 @@ userSchema.pre("save", async function (next) {
     if(this.isModified("password")){
         this.password = await bcrypt.hash(this.password, 10)
     }
-    next()//it basically tells mongoose that i am done with the pre operation , so continue the save operation 
+    next//it basically tells mongoose that i am done with the pre operation , so continue the save operation 
 })
 
 userSchema.methods.isPasswordCorrect = async function(password){
