@@ -7,4 +7,8 @@ class ApiResponse {
     }
 }
 
+// const obj1 = new ApiResponse(404, null, "hi");
+// console.log(obj1);
+
+
 export {ApiResponse }
