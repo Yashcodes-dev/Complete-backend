@@ -239,6 +239,7 @@ const changeCurrentPassword = asyncHandler( async(req, res)=>{
 
    const {oldPassword, newPassword} = req.body
 
+   //req.user --> coming from auth middleware
    const user = await User.findById(req.user?._id)
 
    const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
@@ -270,7 +271,7 @@ const updateAccountDetails = asyncHandler( async(req, res)=>{
       {
          $set: {
             fullname,
-            email,
+            email,   
          }
       },
       {new : true}
@@ -349,6 +350,7 @@ export {
    logoutUser,
    refreshAccessToken,
    changeCurrentPassword,
+   updateUserAvatar,
    getCurrentUser,
    updateUserCoverImage
 }
