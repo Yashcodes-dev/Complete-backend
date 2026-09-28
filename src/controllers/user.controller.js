@@ -343,6 +343,56 @@ const updateUserCoverImage = asyncHandler( async(req, res)=>{
 
 })
 
+const getUserChannelProfile = asyncHandler( async(req, res)=>{
+
+   const{username} = req.params
+
+   if(!username?.trim) throw new ApiError(400, "username is missing")
+
+      // "Ask MongoDB to process the User documents through these stages."
+      const channel = await User.aggregate([
+         {
+            $match: {
+               username: username?.toLowerCase()
+            },
+         },
+         {
+             $lookup: {
+               from: "subscriptions",
+               localField: "_id", // this field from current document should we use for the comparison
+               foreignField: "channel",
+               as: "subscriber"  
+            }
+         },
+         {
+             $lookup: {
+               from: "subscriptions",
+               localField: "_id",
+               foreignField: "subscriber",
+               as: "subscribedTo"  
+            }
+         },
+         {
+            $addFields:{
+               subscribersCount: {
+                  $size : "$subscribers"
+               },
+               ChannelsSubscribedToCount: {
+                  $size: "$subscribedTo"
+               },
+               isSubscribed:{
+                  $cond: {
+                     if:{$in:[req.user?._id, "$subscribers.subscriber"]},
+                     then: true,
+                     else: false
+                  }
+               }
+            }
+         },
+      ])
+
+})
+
 
 
 
